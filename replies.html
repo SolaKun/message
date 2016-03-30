@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="jquery/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="vue/vue.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/domutil.js"></script>
+    <script src="jquery/jquery.ns-autogrow.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="replay-banner">
+    <span class="glyphicon glyphicon-pencil"></span>
+    &nbsp;&nbsp;评论 {{ length }} 条
+</div>
+<div id="replies"></div>
+</body>
+<script>
+    $(document).ready(function () {
+        $.get("part/comment.part.html", function (data) {
+            $(data).css('display', '').prependTo('body');
+        });
+        $.get("part/nav.part.html", function (data) {
+            $(data).css('display', '').prependTo('body');
+        });
+        $('#reply').css('overflow', 'hidden').autogrow({
+            vertical: true,
+            horizontal: false,
+            postGrowCallback: function () {
+                var times = 0;
+                return function () {
+                    times++;
+                    if (times >7) {
+                        this.vertical = false;
+                    }
+                };
+            }()
+        });
+        $('.panel-reply').clone().appendTo('#replies');
+    });
+</script>
+</html>
