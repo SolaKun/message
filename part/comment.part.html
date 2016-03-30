@@ -1,0 +1,39 @@
+<!-- COMMENT START -->
+<div class="panel panel-info" id="gen" style="display: none">
+    <div class="panel-heading">
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="img-circle" :src="user.avatar" width="64" height="64" alt="目瞪口呆.jpg">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ user.nickname }}</h4>
+                <p>{{ timestamp }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        {{ text }}
+    </div>
+    <div class="panel-footer" style="padding: 0">
+        <div class="btn-group btn-group-justified no-cor" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;888
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;分享
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" onclick="toComment({{ id }});">
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;评论
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- COMMENT END -->
