@@ -3,23 +3,25 @@
  */
 'use strict';
 var tokenRegex = new RegExp('token=([0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12})');
-var idRegex = new RegExp('id=(\d+)');
-var token = tokenRegex.exec(window.location.href)[1];
-var id = idRegex.exec(window.location.href)[1];
+var idRegex = new RegExp('id=(\\d+)');
+var token = tokenRegex.exec(window.location.href);
+token = token && token[1];
+var id = idRegex.exec(window.location.href);
+id = id && id[1];
 var api = {};
 var totalPage = 0;
 
 var errorHandler = function (err) {
 
 };
-
+var API_BASE = 'http://wcs.sola.love/comment';
 api.create = function (text, parent) {
     if (!text) {
         return;
     }
     parent = parent || 0;
     $.ajax({
-        URL: '/comment/0',
+        URL: API_BASE + '/0',
         type: 'POST',
         data: {
             'text': text,
@@ -39,7 +41,7 @@ api.create = function (text, parent) {
 api.fetch = function (index) {
     index = index || 0;
     $.ajax({
-        url: '/comment/0',
+        url: API_BASE + '/0',
         type: 'GET',
         data: {
             'page': index
@@ -55,12 +57,12 @@ api.fetch = function (index) {
         error: errorHandler
     });
 };
-api.get = function (id) {
+api.get = function () {
     if (!id) {
         return api.fetch(0);
     }
     $.ajax({
-        url: '/comment/{' + id + '}',
+        url: API_BASE + '/' + id + '',
         type: 'GET',
         dataType: 'json',
         headers: {
@@ -69,6 +71,12 @@ api.get = function (id) {
         success: function (data) {
             domUtil.inject(data.comment);
             domUtil.injectAll(data.replies);
+            new Vue({
+                el: '.reply-banner',
+                data: {
+                    length: data.replies.length
+                }
+            });
         },
         error: errorHandler
     });
@@ -78,7 +86,7 @@ api.update = function (id, text) {
         return;
     }
     $.ajax({
-        url: '/comment/{' + id + '}',
+        url: API_BASE + '/' + id + '',
         type: 'PATCH',
         data: {
             'text': text
@@ -98,7 +106,7 @@ api.del = function (id) {
         return;
     }
     $.ajax({
-        url: '/comment/{' + id + '}',
+        url: API_BASE + '/' + id + '',
         type: 'DELETE',
         dataType: 'json',
         headers: {

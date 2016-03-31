@@ -8,46 +8,46 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="vue/vue.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/domutil.js"></script>
+    <script src="jquery/jquery.ns-autogrow.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 <div id="comments"></div>
+<div class="no-more" style="display: none">
+    已经没有更多了哦~&nbsp;&nbsp;&nbsp;>ω<
+</div>
 </body>
 <!--TEST CASE-->
 <script>
-    var maxPage = 0;
-    new Promise(function (resolve) {
-        $.get("part/comment.part.html", function (data) {
-            $(data).prependTo('#comments');
-        });
-        resolve();
-    }).then(function () {
-        $.ajax({
-            url: 'http://wcs.sola.love/comment/0',
-            dataType: 'json',
-            async: true,
-            success: function (data) {
-                maxPage = data.totalPage;
-                domUtil.injectAll(data.comments);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    }).then(function () {
-        $(document).ready(function () {
-            var loading = false;
-            $(window).scroll(function () {
-                if (!loading && ($(window).scrollTop() >= $(document).height() - $(window).height() - 10 )) {
-                    loading = true;
-                    alert("e");
-                    // your content loading call goes here.
-                    loading = false; // reset value of loading once content loaded
+    var currentPage = -1;
+    $.ajaxSetup({
+        async: false
+    });
+    $.get("part/comment.part.html", function (data) {
+        $(data).prependTo('#comments');
+    });
+    $.get("part/nav.part.html", function (data) {
+        $(data).prependTo('body');
+    });
+
+    api.fetch(++currentPage);
+    $(document).ready(function () {
+        var loading = false;
+        $(window).scroll(function () {
+            if (!loading && ($(window).scrollTop() >= $(document).height() - $(window).height() - 10 )) {
+                loading = true;
+                if (currentPage == totalPage - 1) {
+                    $(this).unbind('scroll');
+                    $('.no-more').css('display', '');
+                    return;
                 }
-            });
+                api.fetch(++currentPage);
+                loading = false;
+            }
         });
     });
 </script>

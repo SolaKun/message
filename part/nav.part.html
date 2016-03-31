@@ -10,4 +10,19 @@
             </button>
         </span>
     </div>
+    <script>
+        $('#reply').css('overflow', 'hidden').autogrow({
+            vertical: true,
+            horizontal: false,
+            postGrowCallback: function () {
+                var times = 0;
+                return function () {
+                    times++;
+                    if (times > 7) {
+                        this.vertical = false;
+                    }
+                };
+            }()
+        });
+    </script>
 </nav>

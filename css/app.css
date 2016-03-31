@@ -36,9 +36,26 @@
     padding-top: 1ch;
     margin-bottom: 0.5ch;
 }
-
+#comments>.panel:last-child {
+    margin-bottom: 0;
+}
+.no-more {
+    font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 20px;
+    /*background-color: #3c3c3c;*/
+    text-align: center;
+    width: 100%;
+    margin-bottom: 60px;
+}
+/*ERROR PAGE*/
+.error {
+    font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;
+    color: #2aabd2;
+}
 /*REPLY BEGIN*/
-.replay-banner {
+.reply-banner {
     margin-top: 10px;
     padding: 5px 15px;
     background-color: #bce8f1;
@@ -63,7 +80,6 @@
 }
 #replies>.panel-reply:last-child {
     border-bottom: 1px solid #bce8f1;
-    margin-bottom: 100px;
 }
 .reply-heading {
     border-top: 1px solid;

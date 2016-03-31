@@ -8,6 +8,7 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="vue/vue.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/domutil.js"></script>
     <script src="jquery/jquery.ns-autogrow.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,34 +16,33 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-<div class="replay-banner">
+<div class="reply-banner">
     <span class="glyphicon glyphicon-pencil"></span>
     &nbsp;&nbsp;评论 {{ length }} 条
 </div>
 <div id="replies"></div>
+<div class="no-more">
+    已经没有更多了哦~&nbsp;&nbsp;&nbsp;>ω<
+</div>
 </body>
 <script>
+    $.ajaxSetup({
+        async: false
+    });
+    if (!id) {
+        window.location.href = 'error.html?err=40400';
+    }
     $(document).ready(function () {
         $.get("part/comment.part.html", function (data) {
-            $(data).css('display', '').prependTo('body');
+            $(data).prop('id', 'comment' + id).css('display', '').insertBefore('.reply-banner');
+        });
+        $.get("part/reply.part.html", function (data) {
+            $(data).prependTo('#replies');
         });
         $.get("part/nav.part.html", function (data) {
             $(data).css('display', '').prependTo('body');
         });
-        $('#reply').css('overflow', 'hidden').autogrow({
-            vertical: true,
-            horizontal: false,
-            postGrowCallback: function () {
-                var times = 0;
-                return function () {
-                    times++;
-                    if (times >7) {
-                        this.vertical = false;
-                    }
-                };
-            }()
-        });
-        $('.panel-reply').clone().appendTo('#replies');
+        api.get();
     });
 </script>
 </html>

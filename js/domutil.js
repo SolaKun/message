@@ -55,7 +55,7 @@ var domUtil = {
      */
     inject: function (jsonData) {
         jsonData = jQuery.extend(true, {}, jsonData);        //deep copy
-        domUtil.add(jsonData.id);
+        domUtil.add(jsonData.id, jsonData.parent);
         jsonData.timestamp = timeAgoFromEpochTime(jsonData.timestamp / 1000);
         new Vue({
             el: '#comment' + jsonData.id,
