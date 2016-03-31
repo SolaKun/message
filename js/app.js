@@ -8,6 +8,8 @@ var App = new function () {
     var atPrefix = '<span class="label label-info"></span>';
     //默认为顶级留言
     var parent = 0;
+	//提及谁
+	var mention = undefined;
     //Get回来的数据
     var data = {};
     //维持this
@@ -31,7 +33,7 @@ var App = new function () {
 
     //* 当Fetch到留言的时候
     this.onFetchComment = function (dat) {
-        console.log(dat);
+//        console.log(dat);
         //装载照片
         var cs = dat.comments;
         for (var i in cs) {
@@ -62,12 +64,12 @@ var App = new function () {
         });
 
         //默认顶层留言
-        self.selectReply((dat.replies && dat.comment.id ) || 0);
+		parent = dat.comment.id;
     };
 
-    //* 选择一个父留言进行回复
+    //* 选择一个留言进行mention回复
     this.selectReply = function (id) {
-		parent = id;
+		mention = id;
         var nickname = getNickNameById(id);
         var $target = $('#reply_target');
         nickname ? $target.text('@ ' + nickname).show() : $target.hide();
@@ -77,13 +79,13 @@ var App = new function () {
     //* 点击"评论"按钮,触发评论当前父留言,或者跳到留言页面
     this.doComment = function (id) {
         //如果已经进到了局部留言页面就表示选择当前父留言回复
-        data.replies ? self.selectReply(data.comment.id) : (window.location.href = 'replies.html?id=' + id + "&token=" + token);
+        data.replies ? self.selectReply() : (window.location.href = 'replies.html?id=' + id + "&token=" + token);
     };
 
     //* 进行留言操作
     this.doReply = function (content) {
         if (content.trim().length == 0)
             return alert('请输入留言!');
-        api.create(content, parent);
+        api.create(content, parent, mention);
     };
 };
