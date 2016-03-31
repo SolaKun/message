@@ -7,7 +7,7 @@ var App = new function () {
     //@姓名显示的HTML
     var atPrefix = '<span class="label label-info"></span>';
     //默认为顶级留言
-    var parent = 0; //TODO 如果是在reply界面的话，默认不应为0，而是当前页面的commentID
+    var parent = 0;
     //Get回来的数据
     var data = {};
     //维持this
@@ -67,6 +67,7 @@ var App = new function () {
 
     //* 选择一个父留言进行回复
     this.selectReply = function (id) {
+		parent = id;
         var nickname = getNickNameById(id);
         var $target = $('#reply_target');
         nickname ? $target.text('@ ' + nickname).show() : $target.hide();
