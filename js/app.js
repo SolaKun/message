@@ -45,14 +45,14 @@ var App = new function () {
     //* 当获取到留言列表的时候
     this.onGetComment = function (dat) {
         data = dat;
-        // console.log(dat);
+         console.log(dat);
         //针对非对此父留言的回复显示@姓名
         var parentId;
         dat.replies && ((parentId = dat.comment.id), $('.ly-son-reply').each(function (i) {
             var r = dat.replies[i];
             var $this = $(this);
-            if (r && r.parent != parentId)//显示@姓名
-                $this.prepend($(atPrefix).text(getNickNameById(r.parent) || '外星人').prop('outerHTML'));
+            if (r && r.mention)//显示@姓名
+                $this.prepend($(atPrefix).text('@' + (getNickNameById(r.mention) || '外星人')).prop('outerHTML'));
         }) );
         //显示头像
         //当原头像无法加载的时候加载SolaCache端的头像
