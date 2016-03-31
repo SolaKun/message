@@ -36,9 +36,11 @@ api.create = function (text, parent) {
         headers: {
             'x-auth-token': token
         },
-        success: function (data) {
-            data.timestamp = new Date().getTime();
-            domUtil.inject(data);
+        success: function () {
+            // 不进行注入操作，直接刷新页面
+            // data.timestamp = new Date().getTime();
+            // domUtil.inject(data);
+            window.location.href = '';
         },
         error: errorHandler
     });
