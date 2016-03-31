@@ -1,9 +1,11 @@
-<div class="panel-reply" id="r-gen" style="display: none">
+<div class="panel-reply ly-panel-reply" id="r-gen" style="display: none">
     <div class="reply-heading">
         <div class="media">
             <div class="media-left">
                 <a href="#">
-                    <img class="img-circle" :src="user.avatar" width="48" height="48" alt="目瞪口呆.jpg">
+                    <img class="img-circle ly-user-ava"
+                    data-cache="http://cache.sola.love/wximg/{{ user.id }}.jpg"
+                    data-src="{{ user.avatar }}" width="48" height="48" alt="目瞪口呆.jpg">
                 </a>
             </div>
             <div class="media-body">
@@ -13,10 +15,10 @@
         </div>
     </div>
     <div class="reply-body">
-        <div class="msg-text">
+        <div class="msg-text ly-son-reply">
             {{ text }}
         </div>
-        <div class="reply-icon" onclick="doReply({{ id }})">
+        <div class="reply-icon" onclick="App.selectReply({{ id }})">
             <span class="glyphicon glyphicon-comment"></span>
         </div>
         <div class="clearfix"></div>

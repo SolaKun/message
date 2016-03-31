@@ -1,9 +1,10 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="input-group" style="padding: 8px">
         <!--<input type="text" class="form-control" placeholder="点击输入评论" id="reply">-->
-        <textarea rows="1" class="form-control" placeholder="点击输入评论" id="reply" style="resize: none;"></textarea>
+		<div class="input-group-addon" id="reply_target" style="display: none;">@&nbsp;Sombody</div>
+		<textarea rows="1" class="form-control" placeholder="点击输入评论" id="reply" style="resize: none;"></textarea>
         <span class="input-group-btn">
-            <button class="btn btn-info" type="button">
+            <button class="btn btn-info" type="button" onclick="App.doReply($('#reply').val());">
                 &nbsp;&nbsp;
                 <span class="glyphicon glyphicon-send"></span>
                 &nbsp;&nbsp;

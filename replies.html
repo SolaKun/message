@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Title</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <script src="jquery/jquery.min.js"></script>
@@ -11,8 +13,6 @@
     <script src="js/api.js"></script>
     <script src="js/domutil.js"></script>
     <script src="jquery/jquery.ns-autogrow.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -42,6 +42,7 @@
         $.get("part/nav.part.html", function (data) {
             $(data).css('display', '').prependTo('body');
         });
+		api.onGet = App.onGetComment;
         api.get();
     });
 </script>

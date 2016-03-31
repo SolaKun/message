@@ -8,20 +8,25 @@ var token = tokenRegex.exec(window.location.href);
 token = token && token[1];
 var id = idRegex.exec(window.location.href);
 id = id && id[1];
-var api = {};
+window.api = {};
 var totalPage = 0;
 
 var errorHandler = function (err) {
 
 };
 var API_BASE = 'http://wcs.sola.love/comment';
+
+//* 扩展接口:
+api.onGet = undefined;
+api.onFetch = undefined;
+
 api.create = function (text, parent) {
     if (!text) {
         return;
     }
     parent = parent || 0;
     $.ajax({
-        URL: API_BASE + '/0',
+        url: API_BASE + '/0',
         type: 'POST',
         data: {
             'text': text,
@@ -53,6 +58,7 @@ api.fetch = function (index) {
         success: function (data) {
             totalPage = data.totalPage;
             domUtil.injectAll(data.comments);
+			api.onFetch && api.onFetch(data);
         },
         error: errorHandler
     });
@@ -77,6 +83,7 @@ api.get = function () {
                     length: data.replies.length
                 }
             });
+			api.onGet && api.onGet(data);
         },
         error: errorHandler
     });

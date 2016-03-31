@@ -33,7 +33,7 @@
     $.get("part/nav.part.html", function (data) {
         $(data).prependTo('body');
     });
-
+	api.onFetch = App.onFetchComment;
     api.fetch(++currentPage);
     $(document).ready(function () {
         var loading = false;
