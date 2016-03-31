@@ -43,7 +43,7 @@ var App = new function () {
     //* 当获取到留言列表的时候
     this.onGetComment = function (dat) {
         data = dat;
-        console.log(dat);
+        // console.log(dat);
         //针对非对此父留言的回复显示@姓名
         var parentId;
         dat.replies && ((parentId = dat.comment.id), $('.ly-son-reply').each(function (i) {

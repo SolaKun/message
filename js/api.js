@@ -20,7 +20,7 @@ var API_BASE = 'http://wcs.sola.love/comment';
 api.onGet = undefined;
 api.onFetch = undefined;
 
-api.create = function (text, parent) {
+api.create = function (text, parent, mention) {
     if (!text) {
         return;
     }
@@ -30,7 +30,8 @@ api.create = function (text, parent) {
         type: 'POST',
         data: {
             'text': text,
-            'parent': parent
+            'parent': parent,
+            'mention': mention
         },
         dataType: 'json',
         headers: {
