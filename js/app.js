@@ -27,13 +27,11 @@ var App = new function () {
     this.onAvaError = function () {
         var $this = $(this);
         //加载图片出错,尝试Sola端缓存
-        if ($this.attr('src').indexOf('qlogo.cn'))
-            $this.attr('src', $this.data('cache'));
+        $this.attr('src').indexOf('qlogo.cn') < 0 || $this.attr('src', $this.data('cache'));
     };
 
     //* 当Fetch到留言的时候
     this.onFetchComment = function (dat) {
-//        console.log(dat);
         //装载照片
         var cs = dat.comments;
         for (var i in cs) {
@@ -45,22 +43,17 @@ var App = new function () {
     //* 当获取到留言列表的时候
     this.onGetComment = function (dat) {
         data = dat;
-         console.log(dat);
         //针对非对此父留言的回复显示@姓名
         var parentId;
-        dat.replies && ((parentId = dat.comment.id), $('.ly-son-reply').each(function (i) {
-            var r = dat.replies[i];
+        $('#replies .ly-son-reply[data-mention]').each(function (i) {
             var $this = $(this);
-            if (r && r.mention)//显示@姓名
-                $this.prepend($(atPrefix).text('@' + (getNickNameById(r.mention) || '外星人')).prop('outerHTML'));
-        }) );
+			var mid = $this.data('mention');
+            $this.prepend($(atPrefix).text('@' + (getNickNameById(mid) || '外星人')).prop('outerHTML'));
+        }) ;
         //显示头像
         //当原头像无法加载的时候加载SolaCache端的头像
-        $('.ly-user-ava').error(self.onAvaError).attr('src', function () {
-            //加载图片
-            var $this = $(this);
-            if ($this.parents('.ly-panel-reply').prop('id').indexOf('r-gen') < 0)
-                $this.attr('src', $this.data('src'));
+        $('.ly-user-ava[data-src^="http"]').error(self.onAvaError).attr('src', function () {
+            return $(this).data('src');
         });
 
         //默认顶层留言
