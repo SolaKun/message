@@ -11,11 +11,9 @@
     <script src="js/api.js"></script>
     <script src="js/domutil.js"></script>
     <script src="jquery/jquery.ns-autogrow.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
 <div id="comments"></div>
 <div class="no-more" style="display: none">
     已经没有更多了哦~&nbsp;&nbsp;&nbsp;>ω<
@@ -31,7 +29,7 @@
         $(data).prependTo('#comments');
     });
     $.get("part/nav.part.html", function (data) {
-        $(data).prependTo('body');
+		$(data).prependTo('body');
     });
 	api.onFetch = App.onFetchComment;
     api.fetch(++currentPage);
@@ -49,6 +47,7 @@
                 loading = false;
             }
         });
+		App.init();
     });
 </script>
 <!--TEST CASE END-->

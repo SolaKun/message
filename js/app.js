@@ -23,6 +23,12 @@ var App = new function () {
                 return r[i].user.nickname;
     };
 
+	//当页面加载完毕时初始化App
+	this.init = function() {
+			
+	};
+	
+	
     //* 当头像加载出错时使用SolaCache
     this.onAvaError = function () {
         var $this = $(this);
@@ -38,6 +44,8 @@ var App = new function () {
             var $this = $('img.ly-user-ava[data-id="' + cs[i].id + '"]');
             $this.error(self.onAvaError).attr('src', $this.data('src'));
         }
+		//修复显示问题
+		$('.ly-panel-reply:gt(0)').show();
     };
 
     //* 当获取到留言列表的时候
@@ -55,7 +63,9 @@ var App = new function () {
         $('.ly-user-ava[data-src^="http"]').error(self.onAvaError).attr('src', function () {
             return $(this).data('src');
         });
-
+		//修复显示问题
+		$('.ly-panel-reply:gt(1)').show();
+		
         //默认顶层留言
 		parent = dat.comment.id;
     };
